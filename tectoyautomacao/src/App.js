@@ -6,11 +6,13 @@
  * @flow strict-local
  */
 
-import React from 'react';
+
+import React, { useState, useEffect  } from "react";
 import {
   SafeAreaView,
   FlatList,
   Image,
+  DeviceEventEmitter,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
@@ -20,8 +22,7 @@ import {
 
 //import { Appbar } from 'react-native-paper';
 
-import {NativeModules} from 'react-native';
-
+import { NativeModules, NativeEventEmitter } from 'react-native';
 import {TectoySunmiSdkModule} from "./modules";
 
 //var TectoySunmiSdk = NativeModules.TectoySunmiSdkModule;
@@ -40,11 +41,11 @@ class App extends React.Component {
     //  { id: "07", name: "Avança Papel", image:require('./images/function_threeline.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
     //  { id: "08", name: "Gaveta", image:require('./images/function_cash.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
     //  { id: "09", name: "PayGo", image:require('./images/function_payment.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
-    //  { id: "10", name: "Lamp", image:require('./images/function_led.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
+     { id: "10", name: "Lamp", image:require('./images/function_led.png'), onPress: ()=>this.props.navigation.navigate("Lampada_K2")  },
     //  { id: "11", name: "Etiqueta", image:require('./images/function_label.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
     ]
   };
-
+  
   render() {
   
     const columns = 2;
@@ -71,7 +72,6 @@ class App extends React.Component {
             </ScrollView>
           </SafeAreaView>
       </View>
-        
     );
   }
 };
@@ -109,6 +109,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#222222',
     elevation: 5
   },
+
 });
+
 
 export default App;

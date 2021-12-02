@@ -10,13 +10,20 @@ import android.graphics.Matrix;
 import android.os.Build;
 import android.os.IBinder;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.sunmi.extprinterservice.ExtPrinterService;
+
+import java.io.Serializable;
 
 public class TectoySunmiSdkModule extends ReactContextBaseJavaModule {
 
@@ -40,18 +47,158 @@ public class TectoySunmiSdkModule extends ReactContextBaseJavaModule {
         return "TectoySunmiSdkModule";
     }
 
+
+    @ReactMethod
+    public void printBitmap(){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inTargetDensity = 160;
+        options.inDensity = 160;
+        Bitmap bitmap1 = null;
+        if (bitmap1 == null) {
+            bitmap1 = BitmapFactory.decodeResource(getReactApplicationContext().getResources(), R.drawable.test1, options);
+            bitmap1 = scaleImage(bitmap1);
+        }
+        if (getDeviceName().equals("SUNMI K2")){
+            kPrinterPresenter.printBitmap(bitmap1, 0);
+        }else {
+            TectoySunmiPrint.getInstance().printBitmap(bitmap1);
+        }
+    }
+    @ReactMethod
+    public void printStyleAntiWhite(){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printStyleAntiWhite(true);
+        }
+    }
+    @ReactMethod
+    public void resetStyle(){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printStyleReset();
+        }
+    }
+    @ReactMethod
+    public void styleUnderline(Boolean underline){
+        if (getDeviceName().equals("SUNMI K2")){
+            kPrinterPresenter.printStyleUnderLine();
+        }else {
+            TectoySunmiPrint.getInstance().printStyleUnderLine(underline);
+        }
+    }
+    @ReactMethod
+    public void aling(int aling){
+        if (getDeviceName().equals("SUNMI K2")){
+            kPrinterPresenter.setAlign(aling);
+        }else {
+            TectoySunmiPrint.getInstance().setAlign(aling);
+        }
+    }
+    @ReactMethod
+    public void printTable(String[] txt, int[] width, int[] aling){
+        if (getDeviceName().equals("SUNMI K2")){
+            kPrinterPresenter.printTable(txt, width, aling);
+        }else {
+            TectoySunmiPrint.getInstance().printTable(txt, width, aling);
+        }
+    }
+    @ReactMethod
+    public void styleDoubleHeight(Boolean bold){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printStyleDoubleHeight(bold);
+        }
+    }
+    @ReactMethod
+    public void styleDoubleWidth(Boolean bold){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printStyleDoubleWidth(bold);
+        }
+    }
+    @ReactMethod
+    public void  printSytlebold(Boolean bold){
+        if (getDeviceName().equals("SUNMI K2")) {
+            kPrinterPresenter.printStyleBold(bold);
+        }else {
+            TectoySunmiPrint.getInstance().printStyleBold(bold);
+        }
+    }
+    @ReactMethod
+    public void cutpaper(){
+        if (getDeviceName().equals("SUNMI K2")){
+            kPrinterPresenter.cutpaper(1,2);
+        }else {
+            TectoySunmiPrint.getInstance().cutpaper();
+        }
+    }
+    @ReactMethod
+    public void styleInvert(Boolean invert){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printStyleInvert(invert);
+        }
+    }
+
+    @ReactMethod
+    public void styleStrike(Boolean bool){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printStyleStrikethRough(bool);
+        }
+    }
+    @ReactMethod
+    public void printTextWithSize(String texto, int size){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printTextWithSize(texto,size);
+        }
+    }
+    @ReactMethod
+    public void styleItalic(Boolean italic){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printStyleItalic(italic);
+        }
+    }
+    @ReactMethod
+    public void printQr(String txt, int modulo, int error){
+        if (getDeviceName().equals("SUNMI K2")){
+            kPrinterPresenter.printQr(txt, modulo, error);
+        }else {
+            TectoySunmiPrint.getInstance().printQr(txt, modulo, error);
+        }
+    }
+    @ReactMethod
+    public void printDoubleQr(String txt, String txt1, int modo, int error){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printDoubleQRCode(txt,txt1, modo, error);
+        }
+    }
+    @ReactMethod
+    public void printAdvancesLines(int av){
+        if (getDeviceName().equals("SUNMI K2")){
+
+        }else {
+            TectoySunmiPrint.getInstance().printAdvanceLines(av);
+        }
+    }
     @ReactMethod
     public void printText(String texto){
         if (getDeviceName().equals("SUNMI K2")){
             kPrinterPresenter.text(texto);
-            kPrinterPresenter.print3Line();
         }else {
-            System.out.println("printtext");
-            TectoySunmiPrint.getInstance().initPrinter();
-            TectoySunmiPrint.getInstance().setSize(24);
-            TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
             TectoySunmiPrint.getInstance().printText(texto);
-            TectoySunmiPrint.getInstance().feedPaper();
         }
     }
     @ReactMethod
@@ -61,7 +208,49 @@ public class TectoySunmiSdkModule extends ReactContextBaseJavaModule {
         }else {
             tecteCompleto();
         }
-    }  public static String getDeviceName() {
+    }
+
+    @ReactMethod
+    public void print3lines(){
+        if (getDeviceName().equals("SUNMI K2")){
+            kPrinterPresenter.print3Line();
+        }else {
+            TectoySunmiPrint.getInstance().print3Line();
+        }
+    }
+
+    @ReactMethod
+    public void getStatus(){
+        if (getDeviceName().equals("SUNMI K2")){
+            String result = ""+ kPrinterPresenter.getStatus();
+            WritableMap params = Arguments.createMap();
+            params.putString("result",result);
+            getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit("getstatus", params);
+          }else {
+            String result = TectoySunmiPrint.getInstance().printerStatus();
+            WritableMap params = Arguments.createMap();
+            params.putString("result",result);
+            getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit("getstatus", params);
+        }
+    }
+
+    @ReactMethod
+    public void barcode(String texto, int tipo, int weigth, int height, int hripos){
+        if(getDeviceName().equals("SUNMI K2")){
+            kPrinterPresenter.barcode(texto, tipo, weigth, height, hripos);
+        }else {
+            System.out.println("Aqui");
+            TectoySunmiPrint.getInstance().initPrinter();
+            TectoySunmiPrint.getInstance().printBarCode(texto, tipo, weigth, height, hripos);
+            TectoySunmiPrint.getInstance().feedPaper();
+        }
+    }
+
+
+
+    public static String getDeviceName() {
         String manufacturer = Build.MANUFACTURER;
         String model = Build.MODEL;
         if (model.startsWith(manufacturer)) {

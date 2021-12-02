@@ -122,6 +122,14 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void printStyleUnderLine(){
+        try {
+            byte [] underline = ESCUtil.underlineWithOneDotWidthOn();
+            mPrinter.sendRawData(underline);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     // Avança Linha
     public void print3Line() {
         try {
@@ -176,7 +184,13 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void resetStyle(){
+        try{
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public String traduzStatusImpressora(int status) {
 
