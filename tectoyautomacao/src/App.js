@@ -35,7 +35,7 @@ class App extends React.Component {
 
   state = {
     data: [
-      { id: "00", name: "Teste Completo", image:require('./images/function_all.png'), onPress: ()=>TectoySunmiSdkModule.printBitmap(Image.resolveAssetSource(exemplo).uri) },
+      { id: "00", name: "Teste Completo", image:require('./images/function_all.png'), onPress: ()=>TectoySunmiSdkModule.printCupomCompleto() },
     //  { id: "01", name: "Qr Code", image:require('./images/function_qr.png'), onPress: ()=>this.props.navigation.navigate("Qr_CODE") },
     //  { id: "02", name: "Bar Code", image:require('./images/function_barcode.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
     //  { id: "03", name: "Text", image:require('./images/function_text.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },

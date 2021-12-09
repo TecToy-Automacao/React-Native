@@ -128,13 +128,17 @@ public class TectoySunmiSdkModule extends ReactContextBaseJavaModule {
         Bitmap image = BitmapFactory.decodeFile(encodstring.replace(
                 "file:///", ""), options);
         System.out.println("image:" + image);
-        image = scaleImage(image);
+       // image = scaleImage(image);
 
-
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inTargetDensity = 160;
+        o.inDensity = 160;
+        Bitmap bitmap = BitmapFactory.decodeResource(getReactApplicationContext().getResources(), R.drawable.test1, o);
+        Bitmap bitmap1 = scaleImage(bitmap);
         if (getDeviceName().equals("SUNMI K2")) {
-            kPrinterPresenter.printBitmap(image, 0);
+            kPrinterPresenter.printBitmap(bitmap1, 0);
         } else {
-            TectoySunmiPrint.getInstance().printBitmap(image);
+            TectoySunmiPrint.getInstance().printBitmap(bitmap1);
         }
     }
     @ReactMethod

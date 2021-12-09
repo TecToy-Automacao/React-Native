@@ -7,7 +7,7 @@ const {TectoySunmiSdkModule} = NativeModules;
 
 export const printCupomCompleto = async () =>{
     try{
-        /*
+        
         aling(1);
         printText("Alinhamento\n");
         printText("--------------------------------\n");
@@ -81,14 +81,13 @@ export const printCupomCompleto = async () =>{
         aling(0);
         printDoubleQr("www.tectoysunmi.com.br","tectoy", 8, 1);
         aling(1);
-        */
         printText("Imprime Imagem\n");
         printText("--------------------------------\n");
-        printBitmap(exemplo);
+        printBitmap();
         aling(0);
-        printBitmap(exemplo);
+        printBitmap();
         aling(2);
-        printBitmap(exemplo);
+        printBitmap();
         print3lines();
     }catch(error){
     reject(error);
@@ -96,10 +95,10 @@ export const printCupomCompleto = async () =>{
 };
 
 
-export const printBitmap = async (exemplo) =>{
+export const printBitmap = async () =>{
     try {
-        console.log(exemplo);
-        await TectoySunmiSdkModule.printGGG(exemplo);
+        
+        await TectoySunmiSdkModule.printGGG("ur");
     }catch(error){
         reject(error);
     }
