@@ -41,6 +41,7 @@ public class LampadaSdkModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void luzAmarela() throws RemoteException {
+        System.out.println("Amarela luzz");
         mService.closeAllLamp();
         mService.controlLamp(0, "Led-2");
         mService.controlLampForLoop(0,50000,100,"Led-1");

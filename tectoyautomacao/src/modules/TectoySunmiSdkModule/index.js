@@ -1,10 +1,13 @@
 import {NativeModules} from 'react-native';
+import { copyFileAssets, readFile, readFileAssets} from 'react-native-fs';
+
 
 const {TectoySunmiSdkModule} = NativeModules;
 
 
 export const printCupomCompleto = async () =>{
     try{
+        /*
         aling(1);
         printText("Alinhamento\n");
         printText("--------------------------------\n");
@@ -78,13 +81,14 @@ export const printCupomCompleto = async () =>{
         aling(0);
         printDoubleQr("www.tectoysunmi.com.br","tectoy", 8, 1);
         aling(1);
+        */
         printText("Imprime Imagem\n");
         printText("--------------------------------\n");
-        printBitmap();
+        printBitmap(exemplo);
         aling(0);
-        printBitmap();
+        printBitmap(exemplo);
         aling(2);
-        printBitmap();
+        printBitmap(exemplo);
         print3lines();
     }catch(error){
     reject(error);
@@ -92,9 +96,10 @@ export const printCupomCompleto = async () =>{
 };
 
 
-export const printBitmap = async () =>{
+export const printBitmap = async (exemplo) =>{
     try {
-        await TectoySunmiSdkModule.printBitmap();
+        console.log(exemplo);
+        await TectoySunmiSdkModule.printGGG(exemplo);
     }catch(error){
         reject(error);
     }

@@ -3,6 +3,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import App from './App';
 import Lampada from './pages/lampada';
+import Msitef from './pages/msitef';
 import QrCode from './pages/QrCode';
 
 const Routes = createStackNavigator(
@@ -21,6 +22,12 @@ const Routes = createStackNavigator(
         },
         Lampada_K2: {
             screen: Lampada,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        Msitef: {
+            screen: Msitef,
             navigationOptions: {
                 headerShown: false,
             }

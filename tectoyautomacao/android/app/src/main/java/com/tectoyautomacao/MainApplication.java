@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.lampadasdk.LampadaSdkPackage;
+import com.example.msitef.MsitefSdkPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
             packages.add(new LampadaSdkPackage());
             packages.add(new TectoySunmiSdkPackage());
+            packages.add(new MsitefSdkPackage());
           return packages;
         }
 
