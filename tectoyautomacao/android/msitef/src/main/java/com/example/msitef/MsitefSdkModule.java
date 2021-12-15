@@ -13,9 +13,12 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -63,50 +66,72 @@ public class MsitefSdkModule extends ReactContextBaseJavaModule implements Activ
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (requestCode == REQ_CODE && resultCode == getCurrentActivity().RESULT_OK) {
-            if (retornoSitef.getCodResp().equals("0")) {
-                String impressao = "";
-                // Verifica se tem algo pra imprimir
-                if (!retornoSitef.textoImpressoCliente().isEmpty()) {
-                    impressao += retornoSitef.textoImpressoCliente();
-                }
-                if (!retornoSitef.textoImpressoEstabelecimento().isEmpty()) {
-                    impressao += "\n\n-----------------------------     \n";
-                    impressao += retornoSitef.textoImpressoEstabelecimento();
-                }
-                if (!impressao.isEmpty() && acao.equals("reimpressao")) {
-                    dialogImpressao(impressao, 17);
-                }
-            }
-            // Verifica se ocorreu um erro durante venda ou cancelamento
-            if (acao.equals("venda") || acao.equals("cancelamento")) {
-                if (retornoSitef.getCodResp().isEmpty() || !retornoSitef.getCodResp().equals("0") || retornoSitef.getCodResp() == null) {
-                    //dialodTransacaoNegadaMsitef(retornoSitef);
-                } else {
-                    dialodTransacaoAprovadaMsitef(retornoSitef);
-                }
-                dialodTransacaoAprovadaMsitef(retornoSitef);
-            }
-        } else {
-            // ocorreu um erro
-            if (acao.equals("venda") || acao.equals("cancelamento")) {
-                //dialodTransacaoNegadaMsitef(retornoSitef);
-            }
+
+        WritableMap params = Arguments.createMap();
+        WritableMap via_estabelecimento = Arguments.createMap();
+        WritableMap dados = Arguments.createMap();
+        try {
+            params.putString("result", "Via Cliente\n " + retornoSitef.getVIA_CLIENTE().toString());
+            via_estabelecimento.putString("result", "Via Estabelecimento\n " + retornoSitef.getVIA_ESTABELECIMENTO().toString());
+            dados.putString("result", "Dados\n CodreSP:    " + retornoSitef.getCodResp() + "\n COMP_DADOS_CONF:   "   + retornoSitef.getCompDadosConf() + "\n CODTRANS:    " + retornoSitef.getCodTrans() + "\n Rede_AUTO:    " + retornoSitef.getRedeAut() + "\n NSU:     " + retornoSitef.getNSUSitef() );
+
+            getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit("via_cliente", params);
+            getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit("via_estabelecimento", via_estabelecimento);
+            getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit("dados", dados);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        // if (requestCode == REQ_CODE && resultCode == getCurrentActivity().RESULT_OK) {
+        //     if (retornoSitef.getCodResp().equals("0")) {
+        //         String impressao = "";
+        //         // Verifica se tem algo pra imprimir
+        //         if (!retornoSitef.textoImpressoCliente().isEmpty()) {
+        //             impressao += retornoSitef.textoImpressoCliente();
+        //         }
+        //         if (!retornoSitef.textoImpressoEstabelecimento().isEmpty()) {
+        //             impressao += "\n\n-----------------------------     \n";
+        //             impressao += retornoSitef.textoImpressoEstabelecimento();
+        //         }
+        //         if (!impressao.isEmpty() && acao.equals("reimpressao")) {
+        //             dialogImpressao(impressao, 17);
+        //         }
+        //     }
+        //     // Verifica se ocorreu um erro durante venda ou cancelamento
+        //     if (acao.equals("venda") || acao.equals("cancelamento")) {
+        //         if (retornoSitef.getCodResp().isEmpty() || !retornoSitef.getCodResp().equals("0") || retornoSitef.getCodResp() == null) {
+        //             //dialodTransacaoNegadaMsitef(retornoSitef);
+        //         } else {
+        //             dialodTransacaoAprovadaMsitef(retornoSitef);
+        //         }
+        //         dialodTransacaoAprovadaMsitef(retornoSitef);
+        //     }
+        // } else {
+        //     // ocorreu um erro
+        //     if (acao.equals("venda") || acao.equals("cancelamento")) {
+        //         //dialodTransacaoNegadaMsitef(retornoSitef);
+        //     }
+        // }
     }
 
 
     @ReactMethod
-    public void efetuavenda (Boolean pinpad){
+    // public void efetuavenda (Boolean pinpad){
+    public void efetuavenda (Boolean pinpad, String empresaSitef, String enderecoSitef, String operador, String valor, String CNPJ_CPF){
         Intent intentSitef = new Intent("br.com.softwareexpress.sitef.msitef.ACTIVITY_CLISITEF");
-        intentSitef.putExtra("empresaSitef", "00000000");
-        intentSitef.putExtra("enderecoSitef", "172.17.102.96"); // Ip do servidor que Tera O Sitef
-        intentSitef.putExtra("operador", "0001");
+
+        intentSitef.putExtra("empresaSitef", empresaSitef);
+        intentSitef.putExtra("enderecoSitef", enderecoSitef); // Ip do servidor que Tera O Sitef
+        intentSitef.putExtra("operador", operador);
         intentSitef.putExtra("data", "20200324");
         intentSitef.putExtra("hora", "130358");
         intentSitef.putExtra("numeroCupom", op);
-        intentSitef.putExtra("valor", "10000");
-        intentSitef.putExtra("CNPJ_CPF", "03654119000176");
+        intentSitef.putExtra("valor", valor);
+        intentSitef.putExtra("CNPJ_CPF", CNPJ_CPF);
         intentSitef.putExtra("comExterna", "0");
         if (pinpad){ // Verifica Se Fará a Transação via Blurtooth ou usb Pinpad
             intentSitef.putExtra("pinpadMac", "00:00:00:00:00:00");
@@ -118,13 +143,14 @@ public class MsitefSdkModule extends ReactContextBaseJavaModule implements Activ
             intentSitef.putExtra("numParcelas", "1");
         } else if (true) {
             intentSitef.putExtra("modalidade", "2");
-            //intentSitef.putExtra("transacoesHabilitadas", "16");
         } else if (false) {
         }
         intentSitef.putExtra("isDoubleValidation", "0");
         intentSitef.putExtra("caminhoCertificadoCA", "ca_cert_perm");
         getCurrentActivity().startActivityForResult(intentSitef, REQ_CODE);
     }
+
+    // private void dialodTransacaoAprovadaMsitef(RetornoMsiTef retornoMsiTef) {
     private void dialodTransacaoAprovadaMsitef(RetornoMsiTef retornoMsiTef) {
         Log.d("Teste", "dialog Transacao");
         StringBuilder cupom = new StringBuilder();
@@ -134,7 +160,7 @@ public class MsitefSdkModule extends ReactContextBaseJavaModule implements Activ
         teste.append("Via Estabelecimento \n" + retornoMsiTef.getVIA_ESTABELECIMENTO() + "\n");
 
 
-
+/*
                 if (getDeviceName().equals("SUNMI K2")){
 
 
@@ -159,6 +185,8 @@ public class MsitefSdkModule extends ReactContextBaseJavaModule implements Activ
                     TectoySunmiPrint.getInstance().print3Line();
                     TectoySunmiPrint.getInstance().cutpaper();
                 }
+
+ */
             }
 
 
