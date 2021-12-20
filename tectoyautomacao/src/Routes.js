@@ -5,6 +5,7 @@ import App from './App';
 import Lampada from './pages/lampada';
 import Msitef from './pages/msitef';
 import QrCode from './pages/QrCode';
+import Paygo from './pages/paygo';
 
 const Routes = createStackNavigator(
     {
@@ -28,6 +29,12 @@ const Routes = createStackNavigator(
         },
         Msitef: {
             screen: Msitef,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        PAYGO: {
+            screen: Paygo,
             navigationOptions: {
                 headerShown: false,
             }

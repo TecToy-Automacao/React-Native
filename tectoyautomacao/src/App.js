@@ -43,7 +43,7 @@ class App extends React.Component {
     //  { id: "05", name: "Imagem", image:require('./images/function_pic.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
     //  { id: "06", name: "Leitura BarCode", image:require('./images/function_scanner.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
     //  { id: "07", name: "Avança Papel", image:require('./images/function_threeline.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
-    //  { id: "08", name: "Gaveta", image:require('./images/function_cash.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
+     { id: "08", name: "Paygo", image:require('./images/function_payment.png'), onPress: ()=>this.props.navigation.navigate("PAYGO")  },
      { id: "09", name: "Msitef", image:require('./images/function_payment.png'), onPress: ()=>this.props.navigation.navigate("Msitef") },
      { id: "10", name: "Lamp", image:require('./images/function_led.png'), onPress: ()=>this.props.navigation.navigate("Lampada_K2")  },
     //  { id: "11", name: "Etiqueta", image:require('./images/function_label.png'), onPress: ()=>TectoySunmiSdk.printCupomCompleto() },
