@@ -2,7 +2,8 @@
 <p><b>. d2mini</b> - Exemplo React-Native utilizando a biblioteca da IT FAST<br>
 Observações: <br>
 - Dentro da pasta android, crie um arquivo local.properties -> Para informar o local do sdk Android da sua máquina, por exemplo:<br>
-&ensp;&ensp;&ensp;"sdk.dir = /Users/caminhoCompletoSDK/Library/Android/sdk";<br>
+&ensp;&ensp;&ensp;- para Windows- "sdk.dir = C:\\Users\\caminhoCompletoSDK\\Android\\SDK";<br>
+&ensp;&ensp;&ensp;- para MAC OS- "sdk.dir = /Users/caminhoCompletoSDK/Library/Android/sdk";<br>
 - Dentro da pasta Android -> app -> src -> main -> java -> com -> d2mini, arquivo It4rModule<br> 
 na linha 15: <br>
 &ensp;&ensp;&ensp;tecToy = new TecToy(Dispositivo.D2_MINI, context);
