@@ -12,7 +12,7 @@ public class It4rModule extends ReactContextBaseJavaModule {
 
     It4rModule(ReactApplicationContext context) {
         super(context);
-        tecToy = new TecToy(Dispositivo.D2_MINI, context);
+        tecToy = new TecToy(Dispositivo.K2_MINI, context);
 
     }
 
