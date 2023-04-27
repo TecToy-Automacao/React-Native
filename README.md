@@ -11,5 +11,5 @@ Informar o equipamento utilizado - funciona para os equipamentos TecToy Automaç
 - Para compilar utilize o comando: 'yarn install', e na sequencia 'yarn run android'<br></p>
 
 
-<p>. tectoyautomacao - Exemplo utilizando AIDL fornecida pela SUNMI (condicionado à modelos de equipamento atendidos pelo pacote)</p>
+<p><b>. itPharma-main</b> - Exemplo temático que simula um terminal de consulta para famácias, utilizando um leitor de código de barras para ler o produto e consultar sua disponibilidade, preço, bula e classificação.</p>
 
